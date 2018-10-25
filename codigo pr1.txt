@@ -1,0 +1,69 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+
+using namespace std;
+
+float angulo, Velocidad, t, h, R, p, x, y; //variables a utilizar
+float tiempo;
+float g = 9.8;
+
+//CALCULOS
+float t_vuelo(float theta, float Vo){    //tiempo de vuelo del proyectil
+t = (2 * Vo*sin(theta)) / g;
+return t;
+}
+float h_max(float theta, float Vo){      //altura maxima del proyectil
+h = (pow((Vo*sin(theta)), 2)) / (2 * g);
+return h;
+}
+float R_max(float theta, float Vo){      // distancia maxima del proyectil en el eje x
+R = (pow(Vo, 2)*sin(2 * theta)) / (g);
+return R;
+}
+float p_posicion(float theta, float Vo, float tiempo) //posiscion solicitada por el usuario
+{
+x = Vo*cos(theta)*tiempo;
+y = (Vo*sin(theta)*tiempo) - 0.5*(g*pow(tiempo, 2));
+return x, y;
+} //funcion de impresion de datos calculados a consola
+void Resultados(float t, float h, float R, float x, float y){
+cout << "El alcance del proyectil es: " << R << " \n";
+cout << "La altura maxima del proyectil es: " << h << " \n";
+cout << "El tiempo de vuelo del proyectil es: " << t << " \n";
+cout << "la posicion del proyectil en el tiempo previamente definido es:" << x << " , " << y << "\n";
+
+}
+int main() { //funcion principal con solicitud
+cout << "Empecemos a jugar: \n";        // de datos y verificacion de los mismos
+cout << "Ingrese el angulo de lanzamiento entre 0 y 90: \n";
+cin >> angulo;
+while ((angulo<0) || (angulo>90)){
+system("cls");
+cout << "Ingrese el angulo de lanzamiento entre 0 y 90: \n";
+cin >> angulo;
+}
+angulo = (angulo*3.1416) / 180;
+
+cout << "Ingrese la velocidad inicial: \n";
+cin >> Velocidad;
+while (Velocidad<0){
+system("cls");
+cout << "Ingrese un valor mayor a 0: \n";
+cin >> Velocidad;
+}
+cout << "Ingrese el tiempo para determinar posicion: \n";
+cin >> tiempo;
+while (tiempo<0){
+system("cls");
+cout << "Ingrese un valor de tiempo correcto, mayor a 0: \n";
+cin >> tiempo;
+}
+t_vuelo(angulo, Velocidad);
+h_max(angulo, Velocidad);
+R_max(angulo, Velocidad);
+p_posicion(angulo, Velocidad, tiempo);
+Resultados(t, h, R, x, y);
+system("pause");
+return 0;
+}
